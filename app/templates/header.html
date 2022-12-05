@@ -12,10 +12,14 @@
         <h5 class="text-right my-auto" id="user_info" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">{{ name }}</h5>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="/check_list">Статистика</a>
+            {% if not current_user.is_admin %}
+                <a class="dropdown-item" href="/check_list">Мои файлы</a>
+            {% endif %}
+
             {% if current_user.is_admin %}
+                <a class="dropdown-item" href="/check_list">Все файлы</a>
                 <a class="dropdown-item" href="/profile">Мой профиль</a>
-                <a class="dropdown-item" href="/criterion_packs">Наборы критериев</a>
+                <a class="dropdown-item" href="/criteria">Критерии</a>
                 <a class="dropdown-item" href="/logs">Логи</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="/version" target="_blank" rel="noopener noreferrer">Version</a>

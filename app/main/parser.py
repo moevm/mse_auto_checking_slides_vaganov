@@ -24,6 +24,7 @@ def parse(filepath, pdf_filepath):
             if tmp_filepath.endswith(('.doc', '.odt')):
                 logger.info(f"Отчёт {filepath} старого формата. Временно преобразован в docx для обработки.")
                 new_filepath = convert_to(filepath, target_format='docx')
+
             docx = DocxUploader()
             docx.upload(new_filepath, pdf_filepath)
             docx.parse()

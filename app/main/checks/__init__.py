@@ -38,6 +38,8 @@ AVAILABLE_CHECKS = {
         ReportChapters.id: ReportChapters,
         ReportSectionComponent.id: ReportSectionComponent,
         ReportMainTextCheck.id: ReportMainTextCheck,
-        SpellingCheck.id: SpellingCheck
+        SpellingCheck.id: SpellingCheck,
+        ReportTemplateNameCheck.id: ReportTemplateNameCheck,
+        ReportTableShareCheck.id: ReportTableShareCheck,
     }
 }

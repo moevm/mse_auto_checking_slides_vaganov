@@ -58,4 +58,3 @@ class MdUpload:
 def main(args):
     md_file = MdUpload(args.mdfile)
     print(md_file.parse_md_file())
-    

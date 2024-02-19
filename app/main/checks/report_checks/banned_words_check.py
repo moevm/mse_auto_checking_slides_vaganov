@@ -7,9 +7,12 @@ class ReportBannedWordsCheck(BaseReportCriterion):
     description = "Проверка наличия запретных слов в тексте отчёта"
     id = 'banned_words_check'
 
-    def __init__(self, file_info, words=["мы"], min_count=3, max_count=6):
+    def __init__(self, file_info, words=["мы"], min_count=3, max_count=6, headers_map=None):
         super().__init__(file_info)
-        self.words = [morph.normal_forms(word)[0] for word in words]
+        if headers_map:
+            self.words = morph.normal_forms(headers_map)
+        else:    
+            self.words = [morph.normal_forms(word)[0] for word in words]
         self.min_count = min_count
         self.max_count = max_count
 
@@ -20,11 +23,12 @@ class ReportBannedWordsCheck(BaseReportCriterion):
         result_str = f'<b>Запрещенные слова: {"; ".join(self.words)}</b><br>'
         count = 0
         for k, v in self.file.pdf_file.get_text_on_page().items():
-            lines_on_page = re.split(r'\n', v)
+            lines_on_page = (re.split(r'\n', v))
+            lines_on_page = [line for line in lines_on_page if line.strip()]
             for index, line in enumerate(lines_on_page):
                 words_on_line = re.split(r'[^\w-]+', line)
-                words_on_line = [morph.normal_forms(word)[0] for word in words_on_line]
-                count_banned_words = set(words_on_line).intersection(self.words)
+                words_on_line = [(morph.normal_forms(word)[0]).lower() for word in words_on_line if word]
+                count_banned_words = set(words_on_line).intersection(set(self.words))
                 if count_banned_words:
                     count += len(count_banned_words)
                     if k not in detected_lines.keys():
